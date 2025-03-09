@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exported Figma Design</title>
+  <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="animation.js" defer></script>
+</head>
+<body>
+  <!-- Main content area with background image -->
+  <div class="background-container">
+    <img src="images/img_9789-1-8.jpg" class="img_9789-1-8" alt="St. John's Harbour" />
+
+    <!-- SVG logo with the hover effect -->
+    <div class="node-11">
+      <img src="images/Understand_Newfoundland_Logo.svg" class="understand-logo" alt="Understand Newfoundland Logo">
+      
+      <!-- The paragraph that will appear on hover -->
+      <div class="hover-text">
+        <p>
+          <em>Understand Newfoundland</em> is an alternative tourism guide to my home province. In it, I curate non-traditional applications of photography and writing to showcase the unconventional beauty of the island in a new and exciting way.
+          <!-- Insert the SVG button inside the paragraph -->
+          <a href="#" class="button-link" id="learnMoreBtn">
+            <img src="images/button.svg" alt="Learn More" class="button-svg">
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact button in the lower right corner -->
+  <div class="contact-button">
+    <a href="mailto:johnmhanchar@gmail.com" title="Email me!">
+      <img src="images/contact_button.svg" alt="Contact Us">
+    </a>
+  </div>
+
+  <!-- Hidden video container (modal) -->
+  <div id="videoModal" class="video-modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModalBtn">&times;</span>
+      <video id="videoPlayer" controls>
+        <source src="images/beach_video.m4v" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    let inactivityTimeout;
+    const node11 = document.querySelector('.node-11');  // The container of the logo and text
+    const hoverText = document.querySelector('.hover-text'); // The hover-text element
+    const videoModal = document.getElementById('videoModal');  // The modal
+    const closeModalBtn = document.getElementById('closeModalBtn'); // The close button
+
+    // Function to open the video modal
+    function openVideoModal() {
+      videoModal.style.display = 'block';  // Show the video modal
+    }
+
+    // Function to close the video modal
+    function closeVideoModal() {
+      videoModal.style.display = 'none';  // Hide the video modal
+    }
+
+    // Close modal when clicking the close button
+    closeModalBtn.addEventListener('click', closeVideoModal);
+
+    // Close the modal when clicking outside the modal content
+    window.addEventListener('click', function(event) {
+      if (event.target === videoModal) {
+        closeVideoModal();
+      }
+    });
+
+    // Handle Learn More button click to show the video
+    document.getElementById('learnMoreBtn').addEventListener('click', function(event) {
+      event.preventDefault();  // Prevent default link behavior
+      openVideoModal();  // Show the video modal
+    });
+
+    function resetInactivityTimer() {
+      clearTimeout(inactivityTimeout);
+      inactivityTimeout = setTimeout(() => {
+        hoverText.classList.add('active'); // Show the hover-text after 250ms of inactivity
+      }, 250); // 250ms delay for quicker response
+    }
+
+    // Listen for mouse movement or keypress to reset the inactivity timer
+    document.body.addEventListener('mousemove', resetInactivityTimer);
+    document.body.addEventListener('keypress', resetInactivityTimer);
+
+    // Initialize the timer when the page loads
+    resetInactivityTimer();
+  </script>
+</body>
+</html>
